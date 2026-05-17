@@ -1,0 +1,19 @@
+# Build output
+bin/
+tmp/
+
+# Air
+build-errors.log
+
+# Environment variables
+.env
+
+# Database files
+*.db
+*.sqlite
+
+# Log files
+*.log
+
+# OS generated files
+.DS_Store

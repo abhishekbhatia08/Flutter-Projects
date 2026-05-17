@@ -1,0 +1,67 @@
+mutation CreateCircuit($title: String!) {
+  createCircuit(title: $title) {
+    id
+    title
+  }
+}
+
+mutation CreateInputNode($circuitID: ID!, $title: String) {
+  createInputNode(circuitID: $circuitID, title: $title) {
+    id
+    title
+  }
+}
+
+mutation CreateOutputNode($circuitID: ID!, $title: String) {
+  createOutputNode(circuitID: $circuitID, title: $title) {
+    id
+    title
+  }
+}
+
+mutation CreateAndNode($circuitID: ID!) {
+  createAndNode(circuitID: $circuitID) {
+    id
+  }
+}
+
+mutation CreateOrNode($circuitID: ID!) {
+  createOrNode(circuitID: $circuitID) {
+    id
+  }
+}
+
+mutation CreateNotNode($circuitID: ID!) {
+  createNotNode(circuitID: $circuitID) {
+    id
+  }
+}
+
+mutation CreateCircuitNode(
+  $circuitID: ID!
+  $referencedCircuitID: ID!
+) {
+  createCircuitNode(
+    circuitID: $circuitID
+    referencedCircuitID: $referencedCircuitID
+  ) {
+    id
+    circuit {
+      id
+      title
+    }
+  }
+}
+
+mutation CreateEdge($circuitID: ID!, $sourceNodeID: ID!, $targetNodeID: ID!) {
+  createEdge(
+    circuitID: $circuitID
+    sourceNodeID: $sourceNodeID
+    targetNodeID: $targetNodeID
+  ) {
+    id
+    sourceNodeID
+    targetNodeID
+  }
+}
+

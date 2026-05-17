@@ -1,0 +1,64 @@
+query GetCircuits {
+  circuits {
+    id
+    title
+    nodes {
+      id
+      ... on InputNode {
+        inputTitle: title
+      }
+      ... on OutputNode {
+        outputTitle: title
+      }
+      ... on CircuitNode {
+        circuit {
+          id
+          title
+        }
+      }
+    }
+    edges {
+      id
+      sourceNodeID
+      targetNodeID
+    }
+  }
+}
+
+query GetCircuit($id: ID!) {
+  circuit(id: $id) {
+    id
+    title
+    nodes {
+      id
+      ... on InputNode {
+        inputTitle: title
+      }
+      ... on OutputNode {
+        outputTitle: title
+      }
+      ... on CircuitNode {
+        circuit {
+          id
+          title
+        }
+      }
+    }
+    edges {
+      id
+      sourceNodeID
+      targetNodeID
+    }
+  }
+}
+
+query EvaluateCircuit($circuitID: ID!, $inputs: [InputNodeValue!]!) {
+  evaluateCircuit(circuitID: $circuitID, inputs: $inputs) {
+    success
+    outputs {
+      nodeID
+      value
+    }
+    error
+  }
+}

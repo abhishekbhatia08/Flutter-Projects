@@ -1,0 +1,111 @@
+# Circuit container with nodes and edges
+type Circuit {
+  id: ID!
+  title: String!
+  nodes: [Node!]!
+  edges: [Edge!]!
+}
+
+# Base interface for all node types
+interface Node {
+  id: ID!
+}
+
+# Input node - provides boolean values to circuit
+type InputNode implements Node {
+  id: ID!
+  title: String  # Optional label for the input
+}
+
+# Output node - receives boolean values from circuit  
+type OutputNode implements Node {
+  id: ID!
+  title: String  # Optional label for the output
+}
+
+# AND logic gate - outputs true when all inputs are true
+type AndNode implements Node {
+  id: ID!
+}
+
+# OR logic gate - outputs true when any input is true
+type OrNode implements Node {
+  id: ID!
+}
+
+# NOT logic gate - inverts input value
+type NotNode implements Node {
+  id: ID!
+}
+
+# Circuit node - references another circuit as reusable component
+type CircuitNode implements Node {
+  id: ID!
+  circuit: Circuit!  # The referenced circuit
+}
+
+# Connection between two nodes
+type Edge {
+  id: ID!
+  sourceNodeID: ID!  # Node providing the value
+  targetNodeID: ID!  # Node receiving the value
+}
+
+# Result of circuit evaluation
+type EvaluationResult {
+  success: Boolean!
+  outputs: [NodeOutput!]!  # Values from output nodes
+  error: String            # Error message if evaluation failed
+}
+
+# Output value from a specific node
+type NodeOutput {
+  nodeID: ID!
+  value: Boolean!
+}
+
+# Input value for circuit evaluation
+input InputNodeValue {
+  nodeID: ID!    # ID of the input node
+  value: Boolean! # Boolean value to provide
+}
+
+type Query {
+  # Get all circuits
+  circuits: [Circuit!]!
+  
+  # Get specific circuit by ID
+  circuit(id: ID!): Circuit
+  
+  # Evaluate circuit with given input values
+  evaluateCircuit(circuitID: ID!, inputs: [InputNodeValue!]!): EvaluationResult!
+}
+
+type Mutation {
+  # Create new circuit
+  createCircuit(title: String!): Circuit!
+  
+  # Create input node in circuit
+  createInputNode(circuitID: ID!, title: String): InputNode!
+  
+  # Create output node in circuit
+  createOutputNode(circuitID: ID!, title: String): OutputNode!
+  
+  # Create AND gate in circuit
+  createAndNode(circuitID: ID!): AndNode!
+  
+  # Create OR gate in circuit  
+  createOrNode(circuitID: ID!): OrNode!
+  
+  # Create NOT gate in circuit
+  createNotNode(circuitID: ID!): NotNode!
+  
+  # Create circuit node referencing another circuit
+  createCircuitNode(
+    circuitID: ID!           # Circuit to add the node to
+    referencedCircuitID: ID! # Circuit to reference
+  ): CircuitNode!
+  
+  # Create connection between nodes
+  createEdge(circuitID: ID!, sourceNodeID: ID!, targetNodeID: ID!): Edge!
+}

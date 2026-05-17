@@ -1,0 +1,12 @@
+version: "3"
+
+tasks:
+  dev:
+    desc: Run Flutter app
+    cmd: flutter run -d chrome
+
+  generate:
+    desc: Generate GraphQL code
+    cmds:
+      - cp ../backend/graph/schema.graphql lib/schema.graphql
+      - dart run build_runner build --delete-conflicting-outputs
