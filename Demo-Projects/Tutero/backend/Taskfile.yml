@@ -1,0 +1,22 @@
+version: '3'
+
+tasks:
+  dev:
+    desc: Start development server with hot reload
+    cmds:
+      - air
+
+  build:
+    desc: Build the application
+    cmds:
+      - go build -o bin/server ./cmd
+
+  generate:
+    desc: Generate GraphQL code
+    cmds:
+      - go run -mod=mod github.com/99designs/gqlgen generate
+
+  test:
+    desc: Run tests
+    cmds:
+      - go test ./...

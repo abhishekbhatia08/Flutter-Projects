@@ -1,0 +1,1 @@
+enum GateType { and, or, not, input, output }
